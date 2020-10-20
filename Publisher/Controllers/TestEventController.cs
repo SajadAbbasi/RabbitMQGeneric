@@ -8,18 +8,18 @@ namespace Publisher.Controllers
     [ApiController]
     public class TestEventController : ControllerBase
     {
-        private readonly IEventBus _eventBus;
+        private readonly IMessageBus _messageBus;
 
-        public TestEventController(IEventBus eventBus)
+        public TestEventController(IMessageBus messageBus)
         {
-            _eventBus = eventBus;
+            _messageBus = messageBus;
         }
 
         [HttpPost]
         public ActionResult Send()
         {
             var ev = new TestDomainEvent("Test");
-            _eventBus.Publish(ev);
+            _messageBus.Publish(ev);
             return Accepted();
         }
     }

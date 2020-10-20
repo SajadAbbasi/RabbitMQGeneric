@@ -26,13 +26,13 @@ namespace Consumer
             });
 
             services.AddControllers();
-            services.RegisterEventBus(Configuration);
+            services.RegisterMessageBus(Configuration);
             services.AddTransient<TestDomainEventHandler>();
         }
 
         public void Configure(IApplicationBuilder app, IServiceProvider serviceProvider)
         {
-            var sa = serviceProvider.GetRequiredService<IEventBus>();
+            var sa = serviceProvider.GetRequiredService<IMessageBus>();
 
             app.UseHttpsRedirection();
             app.UseRouting();
@@ -47,13 +47,13 @@ namespace Consumer
                 endpoints.MapControllers();
             });
 
-            ConfigureEventBus(serviceProvider);
+            ConfigureMessageBus(serviceProvider);
         }
 
-        private void ConfigureEventBus(IServiceProvider serviceProvider)
+        private void ConfigureMessageBus(IServiceProvider serviceProvider)
         {
-            var eventBus = serviceProvider.GetRequiredService<IEventBus>();
-            eventBus.Subscribe<TestDomainEvent, TestDomainEventHandler>();
+            var messageBus = serviceProvider.GetRequiredService<IMessageBus>();
+            messageBus.Subscribe<TestDomainEvent, TestDomainEventHandler>();
         }
     }
 }

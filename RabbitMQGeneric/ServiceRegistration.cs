@@ -8,7 +8,7 @@ namespace RabbitMQGeneric
     public static class ServiceRegistration
     {
         private static RabbitMQConfig _rabbitMQConfig;
-        public static IServiceCollection RegisterEventBus(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection RegisterMessageBus(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<RabbitMQConfig>(configuration.GetSection(nameof(RabbitMQConfig)));
             services.AddSingleton(st => st.GetRequiredService<IOptions<RabbitMQConfig>>().Value);
@@ -23,9 +23,9 @@ namespace RabbitMQGeneric
                 DispatchConsumersAsync = true
             };
 
-            services.AddSingleton<IEventBus, EventBus>(serviceProvider =>
+            services.AddSingleton<IMessageBus, MessageBus>(serviceProvider =>
             {
-                return new EventBus(factory, serviceProvider);
+                return new MessageBus(factory, serviceProvider);
             });
 
             return services;

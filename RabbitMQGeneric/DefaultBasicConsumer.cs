@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace RabbitMQGeneric
 {
-    public class EventBasicConsumer : AsyncDefaultBasicConsumer
+    public class DefaultBasicConsumer : AsyncDefaultBasicConsumer
     {
         private readonly IModel _channel;
         private readonly IServiceProvider _serviceProvider;
 
         public Dictionary<string, (Type @event, List<Type> eventHandlers)> _handlers = new Dictionary<string, (Type, List<Type>)>();
 
-        public EventBasicConsumer(IModel channel, IServiceProvider serviceProvider, Dictionary<string, (Type @event, List<Type> eventHandlers)> handlers)
+        public DefaultBasicConsumer(IModel channel, IServiceProvider serviceProvider, Dictionary<string, (Type @event, List<Type> eventHandlers)> handlers)
         {
             _channel = channel;
             _serviceProvider = serviceProvider;

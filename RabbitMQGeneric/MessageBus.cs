@@ -7,7 +7,7 @@ using System.Text;
 
 namespace RabbitMQGeneric
 {
-    public class EventBus : IEventBus, IDisposable
+    public class MessageBus : IMessageBus, IDisposable
     {
         private readonly IConnectionFactory _connectionFactory;
         private readonly IServiceProvider _serviceProvider;
@@ -19,7 +19,7 @@ namespace RabbitMQGeneric
         private List<IModel> _consumerChannels = new List<IModel>();
         private Dictionary<string, (Type @event, List<Type> eventHandlers)> _handlers = new Dictionary<string, (Type, List<Type>)>();
 
-        public EventBus(IConnectionFactory connectionFactory, IServiceProvider serviceProvider, string exchangeName = "event.bus", string queueName = "default")
+        public MessageBus(IConnectionFactory connectionFactory, IServiceProvider serviceProvider, string exchangeName = "message.bus", string queueName = "default")
         {
             _connectionFactory = connectionFactory;
             _serviceProvider = serviceProvider;
@@ -64,7 +64,7 @@ namespace RabbitMQGeneric
 
             _handlers[eventName].eventHandlers.Add(typeof(TDomainEventHandler));
 
-            var consumer = new EventBasicConsumer(consumerChannel, _serviceProvider, _handlers);
+            var consumer = new DefaultBasicConsumer(consumerChannel, _serviceProvider, _handlers);
             consumerChannel.BasicConsume(queue: qName, autoAck: false, consumer: consumer);
             _consumerChannels.Add(consumerChannel);
         }

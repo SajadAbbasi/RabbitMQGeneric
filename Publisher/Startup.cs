@@ -23,7 +23,7 @@ namespace Publisher
             });
 
             services.AddControllers();
-            services.RegisterEventBus(Configuration);
+            services.RegisterMessageBus(Configuration);
         }
 
         public void Configure(IApplicationBuilder app)

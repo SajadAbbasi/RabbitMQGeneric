@@ -1,6 +1,6 @@
 ﻿namespace RabbitMQGeneric
 {
-    public interface IEventBus
+    public interface IMessageBus
     {
         void Publish(DomainEvent @event, string exchangeName = null);
 
