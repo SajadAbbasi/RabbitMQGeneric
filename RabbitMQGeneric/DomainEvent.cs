@@ -7,17 +7,17 @@ namespace RabbitMQGeneric
         public DomainEvent()
         {
             AggregateId = Guid.NewGuid();
-            CreationDate = DateTime.UtcNow;
+            CreationDateTime = DateTime.Now;
         }
 
-        public DomainEvent(Guid aggregateId, DateTime createDate)
+        public DomainEvent(Guid aggregateId, DateTime creationDateTime)
         {
             AggregateId = aggregateId;
-            CreationDate = createDate;
+            CreationDateTime = creationDateTime;
         }
 
         public Guid AggregateId { get; private set; }
 
-        public DateTime CreationDate { get; private set; }
+        public DateTime CreationDateTime { get; private set; }
     }
 }
